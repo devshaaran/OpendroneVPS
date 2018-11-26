@@ -4,13 +4,6 @@ from matplotlib import pyplot as plt
 import os
 
 def crop_region(img, c_p,w,h):
-    """
-      This function crop the match region in the input image
-      c_p: corner points
-    """
-    # 3 or 4 channel as the original
-    # img = img
-    # img = cv2.resize(img, (0, 0), fx=0.25, fy=0.25)
 
     # mask
     mask = np.zeros(img.shape, dtype=np.uint8)
@@ -43,9 +36,7 @@ def crop_region(img, c_p,w,h):
     return matched_region
 
 def features_matching(path_temp,path_train):
-    """
-          Function for Feature Matching + Perspective Transformation
-    """
+
     img1 = cv2.imread(path_temp, 0)   # template
     img2 = cv2.imread(path_train, 0)   # input image
     img1 = cv2.resize(img1, (0, 0), fx=0.25, fy=0.25)
@@ -92,12 +83,6 @@ def features_matching(path_temp,path_train):
     else:
         print("Not enough matches have been found! - %d/%d" % (len(g_match), min_match))
         matchesMask = None
-
-    # draw_params = dict(matchColor = (0,255,255),
-    #                    singlePointColor = (0,255,0),
-    #                    matchesMask = matchesMask, # only inliers
-    #                    flags = 2)
-    # region corners
     cpoints=np.int32(dst)
     # print(cpoints)
     a, b,c = cpoints.shape
@@ -124,10 +109,7 @@ def features_matching(path_temp,path_train):
 
 
 def video_feauture(video_path):
-    """
-          Function for Feature Matching + Perspective Transformation
 
-    """
     cap = cv2.VideoCapture(video_path)
     r,frame1 = cap.read()
     img1 = frame1
@@ -141,13 +123,9 @@ def video_feauture(video_path):
         img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
         img2 = cv2.resize(img2, (0, 0), fx=0.35, fy=0.35)
 
-
         min_match=10
 
-
         sift = cv2.xfeatures2d.SIFT_create()
-
-
 
         kps1, des1 = sift.detectAndCompute(img1,None)
         kps2, des2 = sift.detectAndCompute(img2,None)
@@ -233,4 +211,4 @@ def video_feauture(video_path):
     cv2.destroyAllWindows()
 
 
-video_feauture('/home/shaaran/PycharmProjects/om/pic_sample/om.mp4')
+video_feauture('path/here')
